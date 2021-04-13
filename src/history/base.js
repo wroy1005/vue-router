@@ -112,6 +112,7 @@ export class History {
       activated
     } = resolveQueue(this.current.matched, route.matched)
 
+    /* 守卫队列 */
     const queue: Array<?NavigationGuard> = [].concat(
       // in-component leave guards
       extractLeaveGuards(deactivated),

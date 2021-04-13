@@ -32,6 +32,8 @@ export default class VueRouter {
   resolveHooks: Array<?NavigationGuard>;
   afterHooks: Array<?AfterNavigationHook>;
 
+
+  // 确定 mode ， 并实例化 this.history 
   constructor (options: RouterOptions = {}) {
     this.app = null
     this.apps = []
@@ -110,6 +112,9 @@ export default class VueRouter {
 
     const history = this.history
 
+    /*
+      初始化路由
+    */
     if (history instanceof HTML5History) {
       history.transitionTo(history.getCurrentLocation())
     } else if (history instanceof HashHistory) {
@@ -123,6 +128,9 @@ export default class VueRouter {
       )
     }
 
+    /*
+      监听路由变化，更改route
+    */
     history.listen(route => {
       this.apps.forEach((app) => {
         app._route = route
@@ -241,8 +249,10 @@ function createHref (base: string, fullPath: string, mode) {
 }
 
 VueRouter.install = install
+/* version 在构建时会被具体替换 */
 VueRouter.version = '__VERSION__'
 
+/* 浏览器中自动注册 */
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter)
 }
